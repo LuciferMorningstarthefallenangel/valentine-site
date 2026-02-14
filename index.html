@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Do You Love Me?</title>
+
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: radial-gradient(circle at center, #1a001f, #000);
+    font-family: 'Segoe UI', sans-serif;
+    overflow: hidden;
+    color: white;
+    text-align: center;
+}
+
+#container {
+    padding: 20px;
+    width: 100%;
+}
+
+h1 {
+    font-size: clamp(2rem, 6vw, 3rem);
+    text-shadow: 0 0 20px rgba(255, 100, 150, 0.8);
+}
+
+.buttons {
+    margin-top: 30px;
+    position: relative;
+    height: 150px;
+}
+
+button {
+    padding: 14px 28px;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    position: absolute;
+}
+
+#yesBtn {
+    background: linear-gradient(45deg, #ff4d6d, #ff758c);
+    left: 30%;
+    top: 40%;
+}
+
+#noBtn {
+    background: rgba(255,255,255,0.2);
+    left: 60%;
+    top: 40%;
+}
+
+#message {
+    display: none;
+    font-size: clamp(2rem, 7vw, 3.5rem);
+    margin-top: 20px;
+    animation: fadeIn 1.5s ease forwards;
+    text-shadow: 0 0 25px rgba(255,100,150,1);
+}
+
+@keyframes fadeIn {
+    from {opacity:0; transform:scale(0.8);}
+    to {opacity:1; transform:scale(1);}
+}
+
+.heart {
+    position: absolute;
+    font-size: 22px;
+    animation: float 6s linear infinite;
+}
+
+@keyframes float {
+    from {transform: translateY(100vh);}
+    to {transform: translateY(-10vh);}
+}
+</style>
+</head>
+
+<body>
+
+<audio id="bgMusic" loop>
+<source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8f2b7f6c6.mp3?filename=romantic-ambient-110397.mp3" type="audio/mp3">
+</audio>
+
+<div id="container">
+    <h1 id="question">Do you love me? 💖</h1>
+
+    <div class="buttons">
+        <button id="yesBtn">Yes</button>
+        <button id="noBtn">No</button>
+    </div>
+
+    <div id="message">❤️ Happy Valentine’s Day ❤️</div>
+</div>
+
+<script>
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+const message = document.getElementById("message");
+const question = document.getElementById("question");
+const music = document.getElementById("bgMusic");
+
+document.body.addEventListener("click", () => {
+    music.play().catch(()=>{});
+}, {once:true});
+
+// Move button on touch or hover
+function moveButton() {
+    const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+    const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+}
+
+noBtn.addEventListener("touchstart", moveButton);
+noBtn.addEventListener("mouseover", moveButton);
+
+yesBtn.addEventListener("click", () => {
+    question.style.display = "none";
+    noBtn.style.display = "none";
+    yesBtn.style.display = "none";
+    message.style.display = "block";
+
+    setInterval(() => {
+        const heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.innerHTML = "❤️";
+        heart.style.left = Math.random() * window.innerWidth + "px";
+        document.body.appendChild(heart);
+        setTimeout(()=>heart.remove(),6000);
+    }, 250);
+});
+</script>
+
+</body>
+</html>
